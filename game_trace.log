@@ -1,0 +1,17 @@
+[2025-11-22 21:55:43] [INFO] Logger initialized.
+[2025-11-22 21:55:43] [INFO] Application Starting...
+[2025-11-22 21:55:43] [INFO] Game Engine Initialized
+[2025-11-22 21:55:43] [STATE] Game: NULL -> MenuState
+[2025-11-22 21:55:52] [INFO] Game Started
+[2025-11-22 21:55:52] [STATE] Game: MenuState -> PlayingState
+[2025-11-22 21:56:04] [DECORATOR] WEAPON UPGRADED!
+[2025-11-22 21:56:14] [HIT] Player hit! HP: 2
+[2025-11-22 21:56:23] [HIT] Player hit! HP: 1
+[2025-11-22 21:56:23] [HIT] Player hit! HP: 0
+[2025-11-22 21:56:23] [STATE] Game: PlayingState -> GameOverState
+[2025-11-22 21:56:26] [STATE] Game: GameOverState -> MenuState
+[2025-11-22 21:56:27] [INFO] Game Started
+[2025-11-22 21:56:27] [STATE] Game: MenuState -> PlayingState
+[2025-11-22 21:57:06] [HIT] Player hit! HP: 2
+[2025-11-22 21:57:08] [INFO] Application Stopping...
+[2025-11-22 21:57:08] [INFO] Closing logger.
