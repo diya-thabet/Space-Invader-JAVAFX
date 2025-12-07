@@ -1,7 +1,7 @@
 package com.galactic.patterns.state;
 
 import com.galactic.core.GameEngine;
-import com.galactic.view.Renderer; // <--- Critical Import
+import com.galactic.view.Renderer;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.KeyCode;
@@ -28,12 +28,12 @@ public class GameOverState implements GameState {
 
     @Override
     public void render(GameEngine context, GraphicsContext gc) {
-        // Use the new Retro Grid to match the rest of the game
+        // Fixed: Using the retro grid
         Renderer.drawRetroGrid(gc, context.getWidth(), context.getHeight(), time, 20);
 
         gc.setTextAlign(TextAlignment.CENTER);
 
-        // Neon Game Over Text with Glow
+        // Neon Game Over Text
         gc.save();
         DropShadow redGlow = new DropShadow();
         redGlow.setColor(Color.RED);
@@ -45,12 +45,12 @@ public class GameOverState implements GameState {
         gc.fillText("GAME OVER", context.getWidth() / 2, 250);
         gc.restore();
 
-        // Score Display
+        // Score
         gc.setFill(Color.WHITE);
         gc.setFont(new Font("Consolas", 40));
         gc.fillText("FINAL SCORE: " + score, context.getWidth() / 2, 350);
 
-        // Retry Prompt (Blinking)
+        // Retry
         if (time % 1.0 < 0.5) {
             gc.setFont(new Font("Consolas", 20));
             gc.fillText("- PRESS ENTER TO RETRY -", context.getWidth() / 2, 450);
@@ -60,7 +60,6 @@ public class GameOverState implements GameState {
     @Override
     public void handleInput(GameEngine context, KeyEvent event) {
         if(event.getCode() == KeyCode.ENTER) {
-            // Restart the game
             context.setState(new PlayingState());
         }
     }

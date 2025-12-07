@@ -5,15 +5,15 @@ import javafx.scene.paint.Color;
 
 public class EntityFactory {
 
+    // Updated to use the new Type system (RED/GREEN)
     public static GameEntity createEnemy(double x, double y, EntityGroup world) {
-        // Randomly choose behavior
-        double r = Math.random();
-        EnemyEntity.Behavior behavior;
-        if (r < 0.5) behavior = EnemyEntity.Behavior.SIMPLE;
-        else if (r < 0.8) behavior = EnemyEntity.Behavior.SINE_WAVE;
-        else behavior = EnemyEntity.Behavior.KAMIKAZE;
+        // Default to Green if not specified
+        return new EnemyEntity(x, y, world, EnemyEntity.Type.GREEN);
+    }
 
-        return new EnemyEntity(x, y, world, behavior);
+    // Helper if you want to specify type
+    public static GameEntity createEnemy(double x, double y, EntityGroup world, EnemyEntity.Type type) {
+        return new EnemyEntity(x, y, world, type);
     }
 
     public static GameEntity createPlayer(double x, double y) {

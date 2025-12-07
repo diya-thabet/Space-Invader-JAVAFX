@@ -1,77 +1,71 @@
-[2025-12-07 22:12:04] [INFO] Logger initialized.
-[2025-12-07 22:12:04] [INFO] Application Starting...
-[2025-12-07 22:12:04] [INFO] Game Engine Initialized
-[2025-12-07 22:12:04] [STATE] Game: NULL -> MenuState
-[2025-12-07 22:12:05] [INFO] Game Started - GLHF
-[2025-12-07 22:12:05] [STATE] Game: MenuState -> PlayingState
-[2025-12-07 22:12:12] [STATE] Game: PlayingState -> GameOverState
-[2025-12-07 22:12:13] [INFO] Game Started - GLHF
-[2025-12-07 22:12:13] [STATE] Game: GameOverState -> PlayingState
-[2025-12-07 22:12:24] [UPGRADE] Acquired Double Shot!
-[2025-12-07 22:12:24] [GAME] PowerUp Collected!
-[2025-12-07 22:12:40] [UPGRADE] Acquired Spread Shot!
-[2025-12-07 22:12:40] [GAME] PowerUp Collected!
-[2025-12-07 22:12:45] [HEAL] Weapon Maxed. HP Restored.
-[2025-12-07 22:12:45] [GAME] PowerUp Collected!
-[2025-12-07 22:12:49] [HEAL] Weapon Maxed. HP Restored.
-[2025-12-07 22:12:49] [GAME] PowerUp Collected!
-[2025-12-07 22:12:58] [HEAL] Weapon Maxed. HP Restored.
-[2025-12-07 22:12:58] [GAME] PowerUp Collected!
-[2025-12-07 22:13:03] [HEAL] Weapon Maxed. HP Restored.
-[2025-12-07 22:13:03] [GAME] PowerUp Collected!
-[2025-12-07 22:13:08] [HEAL] Weapon Maxed. HP Restored.
-[2025-12-07 22:13:08] [GAME] PowerUp Collected!
-[2025-12-07 22:13:12] [HEAL] Weapon Maxed. HP Restored.
-[2025-12-07 22:13:12] [GAME] PowerUp Collected!
-[2025-12-07 22:13:15] [HEAL] Weapon Maxed. HP Restored.
-[2025-12-07 22:13:15] [GAME] PowerUp Collected!
-[2025-12-07 22:13:19] [HEAL] Weapon Maxed. HP Restored.
-[2025-12-07 22:13:19] [GAME] PowerUp Collected!
-[2025-12-07 22:13:29] [HEAL] Weapon Maxed. HP Restored.
-[2025-12-07 22:13:29] [GAME] PowerUp Collected!
-[2025-12-07 22:13:29] [HEAL] Weapon Maxed. HP Restored.
-[2025-12-07 22:13:29] [GAME] PowerUp Collected!
-[2025-12-07 22:13:30] [HEAL] Weapon Maxed. HP Restored.
-[2025-12-07 22:13:30] [GAME] PowerUp Collected!
-[2025-12-07 22:13:33] [HEAL] Weapon Maxed. HP Restored.
-[2025-12-07 22:13:33] [GAME] PowerUp Collected!
-[2025-12-07 22:13:41] [HEAL] Weapon Maxed. HP Restored.
-[2025-12-07 22:13:41] [GAME] PowerUp Collected!
-[2025-12-07 22:13:44] [HEAL] Weapon Maxed. HP Restored.
-[2025-12-07 22:13:44] [GAME] PowerUp Collected!
-[2025-12-07 22:13:48] [HEAL] Weapon Maxed. HP Restored.
-[2025-12-07 22:13:48] [GAME] PowerUp Collected!
-[2025-12-07 22:13:49] [HEAL] Weapon Maxed. HP Restored.
-[2025-12-07 22:13:49] [GAME] PowerUp Collected!
-[2025-12-07 22:13:51] [HEAL] Weapon Maxed. HP Restored.
-[2025-12-07 22:13:51] [GAME] PowerUp Collected!
-[2025-12-07 22:13:52] [HEAL] Weapon Maxed. HP Restored.
-[2025-12-07 22:13:52] [GAME] PowerUp Collected!
-[2025-12-07 22:13:53] [HEAL] Weapon Maxed. HP Restored.
-[2025-12-07 22:13:53] [GAME] PowerUp Collected!
-[2025-12-07 22:13:55] [HEAL] Weapon Maxed. HP Restored.
-[2025-12-07 22:13:55] [GAME] PowerUp Collected!
-[2025-12-07 22:13:57] [HEAL] Weapon Maxed. HP Restored.
-[2025-12-07 22:13:57] [GAME] PowerUp Collected!
-[2025-12-07 22:13:57] [HEAL] Weapon Maxed. HP Restored.
-[2025-12-07 22:13:57] [GAME] PowerUp Collected!
-[2025-12-07 22:13:59] [HEAL] Weapon Maxed. HP Restored.
-[2025-12-07 22:13:59] [GAME] PowerUp Collected!
-[2025-12-07 22:13:59] [HEAL] Weapon Maxed. HP Restored.
-[2025-12-07 22:13:59] [GAME] PowerUp Collected!
-[2025-12-07 22:14:02] [HEAL] Weapon Maxed. HP Restored.
-[2025-12-07 22:14:02] [GAME] PowerUp Collected!
-[2025-12-07 22:14:04] [STATE] Game: PlayingState -> GameOverState
-[2025-12-07 22:14:06] [INFO] Game Started - GLHF
-[2025-12-07 22:14:06] [STATE] Game: GameOverState -> PlayingState
-[2025-12-07 22:14:14] [UPGRADE] Acquired Double Shot!
-[2025-12-07 22:14:14] [GAME] PowerUp Collected!
-[2025-12-07 22:14:19] [UPGRADE] Acquired Spread Shot!
-[2025-12-07 22:14:19] [GAME] PowerUp Collected!
-[2025-12-07 22:14:32] [HEAL] Weapon Maxed. HP Restored.
-[2025-12-07 22:14:32] [GAME] PowerUp Collected!
-[2025-12-07 22:14:34] [HEAL] Weapon Maxed. HP Restored.
-[2025-12-07 22:14:34] [GAME] PowerUp Collected!
-[2025-12-07 22:14:36] [STATE] Game: PlayingState -> GameOverState
-[2025-12-07 22:14:49] [INFO] Application Stopping...
-[2025-12-07 22:14:49] [INFO] Closing logger.
+[2025-12-07 23:16:32] [INFO] Logger initialized.
+[2025-12-07 23:16:32] [INFO] Application Starting...
+[2025-12-07 23:16:32] [INFO] Game Engine Initialized
+[2025-12-07 23:16:32] [STATE] Game: NULL -> MenuState
+[2025-12-07 23:16:33] [INFO] Game Started - Stable Edition
+[2025-12-07 23:16:33] [STATE] Game: MenuState -> PlayingState
+[2025-12-07 23:16:45] [PLAYER] Shield Activated!
+[2025-12-07 23:16:47] [PLAYER] Shield Activated!
+[2025-12-07 23:16:47] [PLAYER] Shield Activated!
+[2025-12-07 23:16:48] [PLAYER] Shield Activated!
+[2025-12-07 23:16:48] [PLAYER] Shield absorbed damage!
+[2025-12-07 23:16:48] [PLAYER] Shield Activated!
+[2025-12-07 23:16:48] [PLAYER] Shield Activated!
+[2025-12-07 23:16:49] [PLAYER] Shield Activated!
+[2025-12-07 23:16:49] [PLAYER] Shield Activated!
+[2025-12-07 23:16:49] [PLAYER] Shield Activated!
+[2025-12-07 23:16:51] [PLAYER] Shield absorbed damage!
+[2025-12-07 23:16:52] [PLAYER] Shield Activated!
+[2025-12-07 23:16:54] [PLAYER] Shield Activated!
+[2025-12-07 23:16:54] [PLAYER] Shield Activated!
+[2025-12-07 23:16:55] [PLAYER] Shield Activated!
+[2025-12-07 23:16:55] [PLAYER] Shield Activated!
+[2025-12-07 23:16:56] [PLAYER] Shield Activated!
+[2025-12-07 23:16:58] [PLAYER] Shield Activated!
+[2025-12-07 23:16:58] [PLAYER] Shield absorbed damage!
+[2025-12-07 23:17:00] [PLAYER] Shield Activated!
+[2025-12-07 23:17:01] [PLAYER] Shield Activated!
+[2025-12-07 23:17:01] [PLAYER] Shield absorbed damage!
+[2025-12-07 23:17:01] [PLAYER] Shield Activated!
+[2025-12-07 23:17:01] [PLAYER] Shield Activated!
+[2025-12-07 23:17:02] [PLAYER] Shield Activated!
+[2025-12-07 23:17:04] [PLAYER] Shield Activated!
+[2025-12-07 23:17:04] [PLAYER] Shield Activated!
+[2025-12-07 23:17:07] [PLAYER] Shield Activated!
+[2025-12-07 23:17:09] [PLAYER] Shield absorbed damage!
+[2025-12-07 23:17:10] [PLAYER] Shield Activated!
+[2025-12-07 23:17:11] [PLAYER] Shield absorbed damage!
+[2025-12-07 23:17:11] [PLAYER] Shield absorbed damage!
+[2025-12-07 23:17:12] [PLAYER] Shield Activated!
+[2025-12-07 23:17:13] [PLAYER] Shield Activated!
+[2025-12-07 23:17:14] [PLAYER] Shield absorbed damage!
+[2025-12-07 23:17:14] [PLAYER] Shield Activated!
+[2025-12-07 23:17:15] [PLAYER] Shield absorbed damage!
+[2025-12-07 23:17:16] [PLAYER] Shield absorbed damage!
+[2025-12-07 23:17:17] [PLAYER] Shield absorbed damage!
+[2025-12-07 23:17:17] [PLAYER] Shield absorbed damage!
+[2025-12-07 23:17:18] [PLAYER] Shield absorbed damage!
+[2025-12-07 23:17:22] [PLAYER] Shield Activated!
+[2025-12-07 23:17:23] [PLAYER] Shield Activated!
+[2025-12-07 23:17:25] [PLAYER] Shield Activated!
+[2025-12-07 23:17:25] [PLAYER] Shield absorbed damage!
+[2025-12-07 23:17:27] [PLAYER] Shield absorbed damage!
+[2025-12-07 23:17:28] [PLAYER] Shield absorbed damage!
+[2025-12-07 23:17:28] [PLAYER] Shield absorbed damage!
+[2025-12-07 23:17:28] [PLAYER] Shield Activated!
+[2025-12-07 23:17:30] [PLAYER] Shield Activated!
+[2025-12-07 23:17:31] [PLAYER] Shield Activated!
+[2025-12-07 23:17:31] [PLAYER] Shield Activated!
+[2025-12-07 23:17:32] [PLAYER] Shield absorbed damage!
+[2025-12-07 23:17:32] [PLAYER] Shield Activated!
+[2025-12-07 23:17:33] [PLAYER] Shield Activated!
+[2025-12-07 23:17:34] [PLAYER] Shield Activated!
+[2025-12-07 23:17:34] [PLAYER] Shield Activated!
+[2025-12-07 23:17:34] [PLAYER] Shield Activated!
+[2025-12-07 23:17:34] [PLAYER] Shield Activated!
+[2025-12-07 23:17:35] [PLAYER] Shield absorbed damage!
+[2025-12-07 23:17:36] [PLAYER] Shield absorbed damage!
+[2025-12-07 23:17:39] [PLAYER] Shield Activated!
+[2025-12-07 23:17:39] [PLAYER] Shield Activated!
+[2025-12-07 23:17:53] [INFO] Application Stopping...
+[2025-12-07 23:17:53] [INFO] Closing logger.

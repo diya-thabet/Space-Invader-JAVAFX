@@ -2,7 +2,6 @@ package com.galactic.view;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.effect.BlendMode;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
@@ -10,109 +9,135 @@ import javafx.scene.paint.Stop;
 
 public class Renderer {
 
-    // Shared effect instance
-    private static final DropShadow NEON_GLOW = new DropShadow();
-
-    static {
-        NEON_GLOW.setRadius(20);
-        NEON_GLOW.setSpread(0.4);
-        NEON_GLOW.setColor(Color.CYAN);
-    }
-
-    // --- COMPATIBILITY: Draw Background ---
+    // --- COMPATIBILITY ---
     public static void drawBackground(GraphicsContext gc, double w, double h) {
         drawRetroGrid(gc, w, h, System.currentTimeMillis() / 1000.0, 50);
     }
 
-    // --- RETRO GRID ENGINE ---
     public static void drawRetroGrid(GraphicsContext gc, double w, double h, double time, double speed) {
         gc.save();
-
-        // 1. Deep Space Background (Gradient)
         LinearGradient bgGradient = new LinearGradient(0, 0, 0, 1, true, CycleMethod.NO_CYCLE,
-                new Stop(0, Color.web("#050011")),
-                new Stop(1, Color.web("#2a0044")));
+                new Stop(0, Color.web("#050011")), new Stop(1, Color.web("#2a0044")));
         gc.setFill(bgGradient);
         gc.fillRect(0, 0, w, h);
 
-        // 2. Horizon Glow (Transparent Pink)
         LinearGradient horizonGlow = new LinearGradient(0, 0, 0, 1, true, CycleMethod.NO_CYCLE,
-                new Stop(0, Color.TRANSPARENT),
-                new Stop(1, Color.web("#ff00ff", 0.3)));
-
+                new Stop(0, Color.TRANSPARENT), new Stop(1, Color.web("#ff00ff", 0.3)));
         gc.setFill(horizonGlow);
         gc.fillRect(0, h * 0.6, w, h * 0.4);
 
-        // 3. Grid Lines
         gc.setStroke(Color.web("#d100d1", 0.25));
         gc.setLineWidth(2);
 
         double gridSize = 50;
         double offset = (time * speed) % gridSize;
 
-        // Vertical lines
-        for (double x = 0; x < w; x += gridSize) {
-            gc.strokeLine(x, 0, x, h);
-        }
-
-        // Horizontal moving lines
+        for (double x = 0; x < w; x += gridSize) gc.strokeLine(x, 0, x, h);
         for (double y = offset; y < h; y += gridSize) {
-            // Fade out lines near top
             double opacity = Math.min(1.0, (y / h) + 0.1);
             gc.setStroke(Color.web("#d100d1", opacity * 0.4));
             gc.strokeLine(0, y, w, y);
         }
-
         gc.restore();
     }
 
-    // --- NEON DRAWING HELPERS ---
-
-    public static void drawNeonPlayer(GraphicsContext gc, double x, double y, double w, double h) {
+    // --- THE PERFECT NEON SHIP (Friend's Design + Neon Glow) ---
+    public static void drawNeonPlayer(GraphicsContext gc, double x, double y, double w, double h, boolean shielded) {
         gc.save();
-        NEON_GLOW.setColor(Color.CYAN);
-        gc.setEffect(NEON_GLOW);
 
-        // Main Body
-        gc.setStroke(Color.CYAN);
-        gc.setLineWidth(3);
-        gc.strokePolygon(
-                new double[]{x + w/2, x, x + w},
-                new double[]{y, y + h, y + h},
-                3
-        );
+        // 1. Shield (Manual Glow to avoid Squares)
+        if (shielded) {
+            gc.setStroke(Color.CYAN);
+            gc.setLineWidth(2);
+            gc.setGlobalAlpha(0.6 + Math.sin(System.currentTimeMillis() / 100.0) * 0.2);
+            gc.strokeOval(x - 10, y - 10, w + 20, h + 20);
+            gc.setGlobalAlpha(1.0);
+        }
 
-        // Engine Thruster
-        gc.setGlobalBlendMode(BlendMode.ADD);
-        gc.setFill(Color.CYAN.deriveColor(0, 1, 1, 0.5));
+        // 2. Wings (Dark Grey/Blue with Neon Edge)
+        gc.setFill(Color.rgb(30, 30, 60));
         gc.fillPolygon(
-                new double[]{x + w/2, x + 10, x + w - 10},
-                new double[]{y, y + h, y + h},
+                new double[]{x, x + w, x + w / 2},
+                new double[]{y + h - 10, y + h - 10, y},
+                3
+        );
+        // Neon Wing Edge
+        gc.setStroke(Color.CYAN);
+        gc.setLineWidth(2);
+        gc.strokePolygon(
+                new double[]{x, x + w, x + w / 2},
+                new double[]{y + h - 10, y + h - 10, y},
+                3
+        );
+
+        // 3. Cannons (Red Tips)
+        gc.setFill(Color.RED);
+        gc.fillRect(x, y + h - 20, 5, 20);
+        gc.fillRect(x + w - 5, y + h - 20, 5, 20);
+
+        // 4. Cockpit (Blue Glow)
+        gc.setFill(Color.WHITE);
+        gc.fillOval(x + w/2 - 5, y + h/2, 10, 15);
+        // Manual Glow for cockpit
+        gc.setStroke(Color.CYAN);
+        gc.setLineWidth(2);
+        gc.strokeOval(x + w/2 - 5, y + h/2, 10, 15);
+
+        // 5. Engine Flame (Flickering)
+        double flicker = Math.random() * 10 + 5;
+        gc.setGlobalBlendMode(BlendMode.ADD);
+        gc.setFill(Color.ORANGE);
+        gc.fillPolygon(
+                new double[]{x + w/2 - 6, x + w/2 + 6, x + w/2},
+                new double[]{y + h, y + h, y + h + flicker},
                 3
         );
 
         gc.restore();
     }
 
-    public static void drawNeonEnemy(GraphicsContext gc, double x, double y, double w, double h, Color color) {
+    public static void drawRedAlien(GraphicsContext gc, double x, double y, double w, double h) {
         gc.save();
-        NEON_GLOW.setColor(color);
-        gc.setEffect(NEON_GLOW);
+        // Manual Glow Strategy (Layering) -> NO SQUARES
+        gc.setStroke(Color.RED);
 
-        gc.setStroke(color);
+        // Outer faint glow
+        gc.setGlobalAlpha(0.3);
+        gc.setLineWidth(6);
+        gc.strokeOval(x, y, w, h - 10);
+
+        // Inner bright line
+        gc.setGlobalAlpha(1.0);
         gc.setLineWidth(2);
+        gc.strokeOval(x, y, w, h - 10);
 
-        // Invader Shape
-        gc.strokePolygon(
-                new double[]{x, x + w * 0.2, x + w * 0.5, x + w * 0.8, x + w, x + w * 0.5},
-                new double[]{y + h * 0.2, y, y + h * 0.4, y, y + h * 0.2, y + h},
-                6
-        );
+        // Legs
+        gc.strokeLine(x + 5, y + h - 10, x, y + h);
+        gc.strokeLine(x + w - 5, y + h - 10, x + w, y + h);
 
         // Eyes
-        gc.setFill(Color.WHITE);
-        gc.fillOval(x + w * 0.3, y + h * 0.4, 4, 4);
-        gc.fillOval(x + w * 0.7, y + h * 0.4, 4, 4);
+        gc.setFill(Color.YELLOW);
+        gc.fillOval(x + 10, y + 10, 5, 5);
+        gc.fillOval(x + w - 15, y + 10, 5, 5);
+
+        gc.restore();
+    }
+
+    public static void drawGreenAlien(GraphicsContext gc, double x, double y, double w, double h) {
+        gc.save();
+
+        // Manual Glow
+        gc.setStroke(Color.LIME);
+        gc.setGlobalAlpha(0.3);
+        gc.setLineWidth(6);
+        gc.strokePolygon(new double[]{x, x + w, x + w / 2}, new double[]{y, y, y + h}, 3);
+
+        gc.setGlobalAlpha(1.0);
+        gc.setLineWidth(2);
+        gc.strokePolygon(new double[]{x, x + w, x + w / 2}, new double[]{y, y, y + h}, 3);
+
+        gc.setFill(Color.RED);
+        gc.fillOval(x + w/2 - 4, y + 10, 8, 8);
 
         gc.restore();
     }
@@ -125,10 +150,13 @@ public class Renderer {
         gc.setFill(Color.WHITE);
         gc.fillOval(x + w*0.25, y, w*0.5, h);
 
-        // Glow
-        NEON_GLOW.setColor(color);
-        gc.setEffect(NEON_GLOW);
+        // Manual Glow (No DropShadow = No Squares)
         gc.setStroke(color);
+        gc.setGlobalAlpha(0.4); // Faint wide glow
+        gc.setLineWidth(6);
+        gc.strokeOval(x, y, w, h);
+
+        gc.setGlobalAlpha(1.0); // Sharp bright edge
         gc.setLineWidth(2);
         gc.strokeOval(x, y, w, h);
 

@@ -24,7 +24,7 @@ public class MenuState implements GameState {
 
     @Override
     public void render(GameEngine context, GraphicsContext gc) {
-        // Safe call to Renderer
+        // Fixed: Calling the correct method in Renderer
         Renderer.drawRetroGrid(gc, context.getWidth(), context.getHeight(), time, 50);
 
         gc.setTextAlign(TextAlignment.CENTER);
@@ -46,7 +46,7 @@ public class MenuState implements GameState {
         // Subtitle
         gc.setFill(Color.MAGENTA);
         gc.setFont(Font.font("Consolas", FontWeight.BOLD, 30));
-        gc.fillText("ULTIMATE EDITION", context.getWidth() / 2, 260);
+        gc.fillText("HYBRID EDITION", context.getWidth() / 2, 260);
 
         // Blink Text
         gc.setFill(Color.WHITE);
