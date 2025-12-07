@@ -31,8 +31,10 @@ public class GameApp extends Application {
             GameEngine engine = GameEngine.getInstance();
             engine.init(gc, WIDTH, HEIGHT);
 
-            // Gestion des entrées clavier
+            // --- CORRECTION: Handling both PRESS and RELEASE events ---
             scene.setOnKeyPressed(event -> engine.handleInput(event));
+            scene.setOnKeyReleased(event -> engine.handleInput(event));
+            // ---------------------------------------------------------
 
             primaryStage.setTitle("Galactic Defenders - Design Patterns Project");
             primaryStage.setResizable(false);
