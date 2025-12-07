@@ -22,12 +22,12 @@ public abstract class GameEntity {
     public abstract void update(double deltaTime);
     public abstract void render(GraphicsContext gc);
 
-    // Méthodes Composite
+    // Composite Methods
     public void add(GameEntity e) { throw new UnsupportedOperationException(); }
     public void remove(GameEntity e) { throw new UnsupportedOperationException(); }
     public List<GameEntity> getChildren() { return null; }
 
-    // Logique de dégâts
+    // Damage Logic
     public void takeDamage(int amount) {
         this.health -= amount;
         if (this.health <= 0) {
@@ -41,4 +41,7 @@ public abstract class GameEntity {
     public double getX() { return x; }
     public double getY() { return y; }
     public String getType() { return type; }
+
+    // FIX: Added Getter for Health so PlayingState can display it
+    public int getHealth() { return health; }
 }

@@ -3,6 +3,7 @@ package com.galactic.patterns.state;
 import com.galactic.core.GameEngine;
 import com.galactic.view.Renderer;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
@@ -23,23 +24,36 @@ public class MenuState implements GameState {
 
     @Override
     public void render(GameEngine context, GraphicsContext gc) {
-        Renderer.drawBackground(gc, context.getWidth(), context.getHeight());
+        // Safe call to Renderer
+        Renderer.drawRetroGrid(gc, context.getWidth(), context.getHeight(), time, 50);
 
         gc.setTextAlign(TextAlignment.CENTER);
 
-        // Titre Néon Pulsant
-        double glow = Math.abs(Math.sin(time * 2));
-        gc.setFill(Color.CYAN);
-        gc.setEffect(new javafx.scene.effect.DropShadow(20 * glow, Color.CYAN));
-        gc.setFont(Font.font("Arial", FontWeight.BOLD, 60));
-        gc.fillText("NEON DEFENDERS", context.getWidth() / 2, 200);
-        gc.setEffect(null);
+        // Neon Title Pulse
+        double glow = Math.abs(Math.sin(time * 3));
 
+        gc.save();
+        DropShadow titleGlow = new DropShadow();
+        titleGlow.setColor(Color.CYAN);
+        titleGlow.setRadius(30 * glow);
+        gc.setEffect(titleGlow);
+
+        gc.setFill(Color.CYAN);
+        gc.setFont(Font.font("Impact", 70));
+        gc.fillText("NEON DEFENDERS", context.getWidth() / 2, 200);
+        gc.restore();
+
+        // Subtitle
+        gc.setFill(Color.MAGENTA);
+        gc.setFont(Font.font("Consolas", FontWeight.BOLD, 30));
+        gc.fillText("ULTIMATE EDITION", context.getWidth() / 2, 260);
+
+        // Blink Text
         gc.setFill(Color.WHITE);
         gc.setFont(Font.font("Consolas", 20));
 
         if (time % 1.0 < 0.5) {
-            gc.fillText("- PRESS ENTER TO START -", context.getWidth() / 2, 400);
+            gc.fillText("- PRESS ENTER TO START -", context.getWidth() / 2, 450);
         }
     }
 

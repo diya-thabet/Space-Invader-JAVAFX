@@ -6,62 +6,76 @@ import com.galactic.patterns.factory.EntityFactory;
 import com.galactic.utils.Logger;
 import com.galactic.view.Renderer;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class PlayingState implements GameState {
     private EntityGroup rootEntity;
     private PlayerEntity player;
     private double enemySpawnTimer = 0;
     private int score = 0;
+    private double time = 0;
 
-    // Input Flags for smooth movement
+    // Control Flags
     private boolean leftPressed = false;
     private boolean rightPressed = false;
 
-    private List<double[]> stars = new ArrayList<>();
+    // JUICE Mechanics
+    private double screenShakeTimer = 0;
+    private Random random = new Random();
 
     @Override
     public void onEnter(GameEngine context) {
         rootEntity = new EntityGroup();
+        // Spawns player at bottom center
         player = (PlayerEntity) EntityFactory.createPlayer(context.getWidth() / 2, context.getHeight() - 80);
         rootEntity.add(player);
-
-        // Generate background stars
-        for(int i=0; i<100; i++) {
-            stars.add(new double[]{Math.random() * context.getWidth(), Math.random() * context.getHeight(), Math.random() * 2 + 0.5});
-        }
-        Logger.getInstance().log("INFO", "Game Started");
+        Logger.getInstance().log("INFO", "Game Started - GLHF");
     }
 
     @Override
     public void update(GameEngine context, double deltaTime) {
-        // 1. Apply Movement based on flags
-        player.handleMovement(leftPressed, rightPressed);
+        time += deltaTime;
 
-        // 2. Spawn Enemies
+        // 1. Shake Decay
+        if (screenShakeTimer > 0) screenShakeTimer -= deltaTime;
+
+        // 2. Player Input & Particles
+        player.handleMovement(leftPressed, rightPressed);
+        // Thruster particles
+        if (Math.random() < 0.5) {
+            rootEntity.add(EntityFactory.createBlueParticle(player.getX() + 25, player.getY() + 50));
+        }
+
+        // 3. Dynamic Enemy Spawning
         enemySpawnTimer += deltaTime;
-        if (enemySpawnTimer > 1.5) { // Spawn every 1.5 seconds
+        double spawnRate = Math.max(0.5, 1.5 - (score / 1000.0));
+
+        if (enemySpawnTimer > spawnRate) {
             double x = Math.random() * (context.getWidth() - 40);
-            GameEntity enemy = EntityFactory.createEnemy(x, -40, rootEntity);
+            GameEntity enemy = EntityFactory.createEnemy(x, -50, rootEntity);
             rootEntity.add(enemy);
             enemySpawnTimer = 0;
         }
 
-        // 3. Update all entities
+        // 4. Update Physics
         rootEntity.update(deltaTime);
 
-        // 4. Collision Detection
+        // 5. Collisions
         checkCollisions(context);
     }
 
     private void checkCollisions(GameEngine context) {
         List<GameEntity> children = rootEntity.getChildren();
+        List<GameEntity> toRemove = new ArrayList<>();
 
         for (int i = 0; i < children.size(); i++) {
             GameEntity a = children.get(i);
@@ -69,89 +83,103 @@ public class PlayingState implements GameState {
                 GameEntity b = children.get(j);
 
                 if (a.getBounds().intersects(b.getBounds())) {
-
-                    // Case 1: Player Bullet vs Enemy
                     if (checkPair(a, b, "PLAYER_BULLET", "ENEMY")) {
-                        GameEntity bullet = getType(a, b, "PLAYER_BULLET");
-                        GameEntity enemy = getType(a, b, "ENEMY");
-
-                        bullet.setAlive(false);
-                        enemy.takeDamage(1);
-
-                        if (!enemy.isAlive()) {
-                            score += 100;
-                            // Chance to drop PowerUp
-                            if (Math.random() < 0.3) {
-                                rootEntity.add(EntityFactory.createPowerUp(enemy.getX(), enemy.getY()));
-                            }
-                            // Explosion particles
-                            for(int k=0; k<5; k++) rootEntity.add(EntityFactory.createParticle(enemy.getX() + 20, enemy.getY() + 20));
-                        }
+                        handleEnemyHit(getType(a, b, "PLAYER_BULLET"), getType(a, b, "ENEMY"));
                     }
-                    // Case 2: Enemy vs Player
                     else if (checkPair(a, b, "ENEMY", "PLAYER")) {
-                        GameEntity enemy = getType(a, b, "ENEMY");
-                        GameEntity p = getType(a, b, "PLAYER");
-
-                        enemy.setAlive(false); // Enemy dies on crash
-                        p.takeDamage(1);
-
-                        if (!p.isAlive()) {
-                            context.setState(new GameOverState(score));
-                            return;
-                        }
+                        getType(a, b, "ENEMY").setAlive(false);
+                        player.takeDamage(1);
+                        addScreenShake(0.3);
+                        spawnExplosion(player.getX(), player.getY(), 10);
+                        if(!player.isAlive()) context.setState(new GameOverState(score));
                     }
-                    // Case 3: Enemy Bullet vs Player
                     else if (checkPair(a, b, "ENEMY_BULLET", "PLAYER")) {
-                        GameEntity bullet = getType(a, b, "ENEMY_BULLET");
-                        GameEntity p = getType(a, b, "PLAYER");
-
-                        bullet.setAlive(false);
-                        p.takeDamage(1);
-
-                        if (!p.isAlive()) {
-                            context.setState(new GameOverState(score));
-                            return;
-                        }
+                        getType(a, b, "ENEMY_BULLET").setAlive(false);
+                        player.takeDamage(1);
+                        addScreenShake(0.1);
+                        if(!player.isAlive()) context.setState(new GameOverState(score));
                     }
-                    // Case 4: Player vs PowerUp
                     else if (checkPair(a, b, "PLAYER", "POWERUP")) {
-                        GameEntity powerup = getType(a, b, "POWERUP");
-                        powerup.setAlive(false);
+                        getType(a, b, "POWERUP").setAlive(false);
                         player.upgradeWeapon();
                         score += 50;
+                        Logger.getInstance().log("GAME", "PowerUp Collected!");
                     }
                 }
             }
         }
     }
 
-    // Helper: Returns true if one entity is type1 and the other is type2 (order independent)
-    private boolean checkPair(GameEntity a, GameEntity b, String type1, String type2) {
-        return (a.getType().equals(type1) && b.getType().equals(type2)) ||
-                (a.getType().equals(type2) && b.getType().equals(type1));
+    private void handleEnemyHit(GameEntity bullet, GameEntity enemy) {
+        bullet.setAlive(false);
+        enemy.takeDamage(1);
+        spawnExplosion(bullet.getX(), bullet.getY(), 2);
+
+        if (!enemy.isAlive()) {
+            score += 100;
+            addScreenShake(0.05);
+            spawnExplosion(enemy.getX(), enemy.getY(), 8);
+            if (Math.random() < 0.2) {
+                rootEntity.add(EntityFactory.createPowerUp(enemy.getX(), enemy.getY()));
+            }
+        }
     }
 
-    // Helper: Returns the specific entity from the pair
+    private void spawnExplosion(double x, double y, int count) {
+        for(int i=0; i<count; i++) rootEntity.add(EntityFactory.createParticle(x, y));
+    }
+
+    private void addScreenShake(double amount) {
+        this.screenShakeTimer = amount;
+    }
+
+    private boolean checkPair(GameEntity a, GameEntity b, String t1, String t2) {
+        return (a.getType().equals(t1) && b.getType().equals(t2)) || (a.getType().equals(t2) && b.getType().equals(t1));
+    }
+
     private GameEntity getType(GameEntity a, GameEntity b, String type) {
         return a.getType().equals(type) ? a : b;
     }
 
     @Override
     public void render(GameEngine context, GraphicsContext gc) {
-        Renderer.drawBackground(gc, context.getWidth(), context.getHeight());
+        // --- APPLY SCREEN SHAKE ---
+        gc.save();
+        if (screenShakeTimer > 0) {
+            double dx = (random.nextDouble() - 0.5) * 10 * screenShakeTimer;
+            double dy = (random.nextDouble() - 0.5) * 10 * screenShakeTimer;
+            gc.translate(dx, dy);
+        }
 
-        // Draw Stars
-        gc.setFill(Color.WHITE);
-        for(double[] star : stars) gc.fillOval(star[0], star[1], star[2], star[2]);
+        // Draw Retro Grid
+        Renderer.drawRetroGrid(gc, context.getWidth(), context.getHeight(), time, 100);
 
         rootEntity.render(gc);
 
-        // UI
+        // --- UI ---
+        gc.save();
         gc.setFill(Color.WHITE);
-        gc.setFont(new Font("Arial", 20));
-        gc.fillText("SCORE: " + score, 20, 30);
-        gc.fillText("HP: " + player.getHealth(), 20, 60);
+        gc.setFont(Font.font("Consolas", FontWeight.BOLD, 22));
+
+        // Shadow for text
+        DropShadow textShadow = new DropShadow();
+        textShadow.setColor(Color.BLACK);
+        textShadow.setRadius(2.0);
+        textShadow.setSpread(0.8);
+        gc.setEffect(textShadow);
+
+        gc.fillText("SCORE: " + score, 20, 50);
+        gc.fillText("SHIELD: ", 20, 80);
+
+        // Shield Bar
+        gc.setEffect(null);
+        gc.setFill(Color.RED);
+        gc.fillRect(110, 65, 100, 15);
+        gc.setFill(Color.LIME);
+        gc.fillRect(110, 65, (Math.max(0, player.getHealth()) / 5.0) * 100, 15);
+
+        gc.restore();
+        gc.restore();
     }
 
     @Override
@@ -159,10 +187,7 @@ public class PlayingState implements GameState {
         if(event.getEventType() == KeyEvent.KEY_PRESSED) {
             if(event.getCode() == KeyCode.LEFT) leftPressed = true;
             if(event.getCode() == KeyCode.RIGHT) rightPressed = true;
-
-            // Pass shoot event (SPACE) to player immediately
             player.handleInput(event, rootEntity);
-
         } else if (event.getEventType() == KeyEvent.KEY_RELEASED) {
             if(event.getCode() == KeyCode.LEFT) leftPressed = false;
             if(event.getCode() == KeyCode.RIGHT) rightPressed = false;
@@ -170,7 +195,5 @@ public class PlayingState implements GameState {
     }
 
     @Override
-    public void onExit() {
-        Logger.getInstance().log("INFO", "Exiting Playing State. Final Score: " + score);
-    }
+    public void onExit() {}
 }
