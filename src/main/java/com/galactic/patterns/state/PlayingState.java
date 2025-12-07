@@ -27,24 +27,36 @@ public class PlayingState implements GameState {
     private int score = 0;
     private int wave = 1;
 
+    // Movement Flags
     private boolean leftPressed = false;
     private boolean rightPressed = false;
+    private boolean upPressed = false;
+    private boolean downPressed = false;
 
     private double screenShakeTimer = 0;
-    // --- FIX PAUSE BOUNCE ---
-    private double pauseCooldown = 0; // Prevents spamming pause
+    private double pauseCooldown = 0;
     private Random random = new Random();
+
+    // Flag to prevent resetting game when resuming from Pause
+    private boolean isInitialized = false;
 
     @Override
     public void onEnter(GameEngine context) {
-        rootEntity = new EntityGroup();
-        starField = new StarField();
+        // Only initialize entities once (First start)
+        if (!isInitialized) {
+            rootEntity = new EntityGroup();
+            starField = new StarField();
 
-        player = (PlayerEntity) EntityFactory.createPlayer(context.getWidth() / 2, context.getHeight() - 80);
-        rootEntity.add(player);
+            player = (PlayerEntity) EntityFactory.createPlayer(context.getWidth() / 2, context.getHeight() - 80);
+            rootEntity.add(player);
 
-        startWave(context);
-        Logger.getInstance().log("INFO", "Game Started - Stable Edition");
+            startWave(context);
+            Logger.getInstance().log("INFO", "Game Started - Stable Edition");
+            isInitialized = true;
+        }
+
+        // Add cooldown when entering state (e.g., returning from Pause) to prevent bouncing
+        pauseCooldown = 0.5;
     }
 
     private void startWave(GameEngine context) {
@@ -57,9 +69,8 @@ public class PlayingState implements GameState {
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < cols; c++) {
                 double x = 100 + c * 60;
-                // --- FIX: SPAWN LOWER ---
-                // Enemies spawn at y=100+ to avoid overlapping the Health Bar/Score
-                double y = 120 + r * 50;
+                // Enemies spawn lower to clear HUD
+                double y = 150 + r * 50;
                 EnemyEntity.Type type = (r == 0) ? EnemyEntity.Type.RED : EnemyEntity.Type.GREEN;
                 GameEntity enemy = new EnemyEntity(x, y, rootEntity, type);
                 enemySquad.add(enemy);
@@ -74,9 +85,9 @@ public class PlayingState implements GameState {
         if (screenShakeTimer > 0) screenShakeTimer -= deltaTime;
         if (pauseCooldown > 0) pauseCooldown -= deltaTime;
 
-        player.handleMovement(leftPressed, rightPressed);
+        // Pass all 4 directions to player
+        player.handleMovement(leftPressed, rightPressed, upPressed, downPressed);
 
-        // Thruster particles
         if (Math.random() < 0.5) {
             rootEntity.add(EntityFactory.createBlueParticle(player.getX() + 25, player.getY() + 50));
         }
@@ -155,33 +166,41 @@ public class PlayingState implements GameState {
         starField.draw(gc);
         rootEntity.render(gc);
 
-        // --- HUD FIXES ---
+        // --- HUD IMPROVEMENTS ---
+
+        // 1. Semi-transparent background box for readability
+        gc.setFill(Color.rgb(0, 0, 0, 0.7));
+        gc.fillRoundRect(20, 20, 280, 140, 20, 20);
+        gc.setStroke(Color.WHITE);
+        gc.setLineWidth(1);
+        gc.strokeRoundRect(20, 20, 280, 140, 20, 20);
+
         gc.setFill(Color.WHITE);
-        gc.setFont(Font.font("Consolas", FontWeight.BOLD, 22));
+        gc.setFont(Font.font("Consolas", FontWeight.BOLD, 24)); // Larger font
 
-        // Moved Score/Wave further down/right to be safe
-        gc.fillText("SCORE: " + score, 70, 40);
-        gc.fillText("WAVE: " + wave, 70, 70);
+        // 2. Text moved down significantly (x=50, y=60+)
+        gc.fillText("SCORE: " + score, 110, 60);
+        gc.fillText("WAVE: " + wave, 90, 90);
 
-        // --- HEALTH BAR FIX ---
-        // Semi-transparent background so you can see enemies behind it
+        // 3. Health Bar moved inside the box
         double hpPercent = Math.max(0, player.getHealth()) / 5.0;
 
-        gc.setGlobalAlpha(0.6); // Transparency
+        // Backing
         gc.setFill(Color.BLACK);
-        gc.fillRect(40, 90, 204, 24); // Backing box
+        gc.fillRect(50, 110, 220, 25);
 
-        gc.setGlobalAlpha(0.8);
-        gc.setFill(Color.RED);
-        gc.fillRect(42, 92, 200, 20); // Empty Red Bar
+        // Red background
+        gc.setFill(Color.web("#550000"));
+        gc.fillRect(50, 110, 220, 25);
 
-        gc.setGlobalAlpha(1.0); // Full opacity for health
+        // Green Health
         gc.setFill(Color.LIME);
-        gc.fillRect(42, 92, hpPercent * 200, 20);
+        gc.fillRect(50, 110, hpPercent * 220, 25);
 
+        // Border
         gc.setStroke(Color.WHITE);
         gc.setLineWidth(2);
-        gc.strokeRect(40, 90, 204, 24);
+        gc.strokeRect(50, 110, 220, 25);
 
         gc.restore();
     }
@@ -191,9 +210,11 @@ public class PlayingState implements GameState {
         if(event.getEventType() == KeyEvent.KEY_PRESSED) {
             if(event.getCode() == KeyCode.LEFT) leftPressed = true;
             if(event.getCode() == KeyCode.RIGHT) rightPressed = true;
+            if(event.getCode() == KeyCode.UP) upPressed = true;     // NEW
+            if(event.getCode() == KeyCode.DOWN) downPressed = true; // NEW
+
             player.handleInput(event, rootEntity);
 
-            // Pause on PRESS (easier to control than release for toggle)
             if(event.getCode() == KeyCode.P && pauseCooldown <= 0) {
                 context.setState(new PausedState(this));
             }
@@ -201,13 +222,16 @@ public class PlayingState implements GameState {
         } else if (event.getEventType() == KeyEvent.KEY_RELEASED) {
             if(event.getCode() == KeyCode.LEFT) leftPressed = false;
             if(event.getCode() == KeyCode.RIGHT) rightPressed = false;
+            if(event.getCode() == KeyCode.UP) upPressed = false;     // NEW
+            if(event.getCode() == KeyCode.DOWN) downPressed = false; // NEW
         }
     }
 
     @Override
     public void onExit() {
-        // Reset flags
         leftPressed = false;
         rightPressed = false;
+        upPressed = false;
+        downPressed = false;
     }
 }

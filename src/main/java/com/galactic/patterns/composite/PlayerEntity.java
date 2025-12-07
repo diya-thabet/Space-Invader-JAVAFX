@@ -11,10 +11,11 @@ import com.galactic.view.Renderer;
 public class PlayerEntity extends GameEntity {
     private Weapon weapon;
     private double velocityX = 0;
+    private double velocityY = 0; // NEW
     private static final double SPEED = 600;
     private int upgradeLevel = 0;
 
-    // Shield Logic (From Friend's Code)
+    // Shield Logic
     private boolean isShielded = false;
     private double shieldTimer = 0;
 
@@ -31,7 +32,7 @@ public class PlayerEntity extends GameEntity {
         } else if (upgradeLevel == 2) {
             this.weapon = new SpreadShotDecorator(this.weapon);
         } else {
-            activateShield(5.0); // Max weapon grants shield
+            activateShield(5.0);
         }
     }
 
@@ -54,36 +55,46 @@ public class PlayerEntity extends GameEntity {
         if (event.getCode() == KeyCode.SPACE) {
             weapon.shoot(x + w/2 - 2.5, y, world);
         }
-        // Shield cheat for testing from friend's code
         if (event.getCode() == KeyCode.B) {
             activateShield(3.0);
         }
     }
 
-    public void handleMovement(boolean left, boolean right) {
+    // UPDATED: Now handles 4 directions
+    public void handleMovement(boolean left, boolean right, boolean up, boolean down) {
         velocityX = 0;
+        velocityY = 0;
+
         if (left) velocityX -= SPEED;
         if (right) velocityX += SPEED;
+
+        if (up) velocityY -= SPEED;
+        if (down) velocityY += SPEED;
     }
 
     @Override
     public void update(double deltaTime) {
         x += velocityX * deltaTime;
+        y += velocityY * deltaTime; // Apply Vertical Movement
 
-        // Shield Timer
         if (isShielded) {
             shieldTimer -= deltaTime;
             if (shieldTimer <= 0) isShielded = false;
         }
 
+        // Clamp to screen
         double screenWidth = GameEngine.getInstance().getWidth();
+        double screenHeight = GameEngine.getInstance().getHeight(); // NEW
+
         if (x < 0) x = 0;
         if (x > screenWidth - w) x = screenWidth - w;
+
+        if (y < 0) y = 0;
+        if (y > screenHeight - h) y = screenHeight - h;
     }
 
     @Override
     public void render(GraphicsContext gc) {
-        // Pass shield state to renderer
         Renderer.drawNeonPlayer(gc, x, y, w, h, isShielded);
     }
 }

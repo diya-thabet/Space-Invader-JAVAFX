@@ -1,71 +1,71 @@
-[2025-12-07 23:16:32] [INFO] Logger initialized.
-[2025-12-07 23:16:32] [INFO] Application Starting...
-[2025-12-07 23:16:32] [INFO] Game Engine Initialized
-[2025-12-07 23:16:32] [STATE] Game: NULL -> MenuState
-[2025-12-07 23:16:33] [INFO] Game Started - Stable Edition
-[2025-12-07 23:16:33] [STATE] Game: MenuState -> PlayingState
-[2025-12-07 23:16:45] [PLAYER] Shield Activated!
-[2025-12-07 23:16:47] [PLAYER] Shield Activated!
-[2025-12-07 23:16:47] [PLAYER] Shield Activated!
-[2025-12-07 23:16:48] [PLAYER] Shield Activated!
-[2025-12-07 23:16:48] [PLAYER] Shield absorbed damage!
-[2025-12-07 23:16:48] [PLAYER] Shield Activated!
-[2025-12-07 23:16:48] [PLAYER] Shield Activated!
-[2025-12-07 23:16:49] [PLAYER] Shield Activated!
-[2025-12-07 23:16:49] [PLAYER] Shield Activated!
-[2025-12-07 23:16:49] [PLAYER] Shield Activated!
-[2025-12-07 23:16:51] [PLAYER] Shield absorbed damage!
-[2025-12-07 23:16:52] [PLAYER] Shield Activated!
-[2025-12-07 23:16:54] [PLAYER] Shield Activated!
-[2025-12-07 23:16:54] [PLAYER] Shield Activated!
-[2025-12-07 23:16:55] [PLAYER] Shield Activated!
-[2025-12-07 23:16:55] [PLAYER] Shield Activated!
-[2025-12-07 23:16:56] [PLAYER] Shield Activated!
-[2025-12-07 23:16:58] [PLAYER] Shield Activated!
-[2025-12-07 23:16:58] [PLAYER] Shield absorbed damage!
-[2025-12-07 23:17:00] [PLAYER] Shield Activated!
-[2025-12-07 23:17:01] [PLAYER] Shield Activated!
-[2025-12-07 23:17:01] [PLAYER] Shield absorbed damage!
-[2025-12-07 23:17:01] [PLAYER] Shield Activated!
-[2025-12-07 23:17:01] [PLAYER] Shield Activated!
-[2025-12-07 23:17:02] [PLAYER] Shield Activated!
-[2025-12-07 23:17:04] [PLAYER] Shield Activated!
-[2025-12-07 23:17:04] [PLAYER] Shield Activated!
-[2025-12-07 23:17:07] [PLAYER] Shield Activated!
-[2025-12-07 23:17:09] [PLAYER] Shield absorbed damage!
-[2025-12-07 23:17:10] [PLAYER] Shield Activated!
-[2025-12-07 23:17:11] [PLAYER] Shield absorbed damage!
-[2025-12-07 23:17:11] [PLAYER] Shield absorbed damage!
-[2025-12-07 23:17:12] [PLAYER] Shield Activated!
-[2025-12-07 23:17:13] [PLAYER] Shield Activated!
-[2025-12-07 23:17:14] [PLAYER] Shield absorbed damage!
-[2025-12-07 23:17:14] [PLAYER] Shield Activated!
-[2025-12-07 23:17:15] [PLAYER] Shield absorbed damage!
-[2025-12-07 23:17:16] [PLAYER] Shield absorbed damage!
-[2025-12-07 23:17:17] [PLAYER] Shield absorbed damage!
-[2025-12-07 23:17:17] [PLAYER] Shield absorbed damage!
-[2025-12-07 23:17:18] [PLAYER] Shield absorbed damage!
-[2025-12-07 23:17:22] [PLAYER] Shield Activated!
-[2025-12-07 23:17:23] [PLAYER] Shield Activated!
-[2025-12-07 23:17:25] [PLAYER] Shield Activated!
-[2025-12-07 23:17:25] [PLAYER] Shield absorbed damage!
-[2025-12-07 23:17:27] [PLAYER] Shield absorbed damage!
-[2025-12-07 23:17:28] [PLAYER] Shield absorbed damage!
-[2025-12-07 23:17:28] [PLAYER] Shield absorbed damage!
-[2025-12-07 23:17:28] [PLAYER] Shield Activated!
-[2025-12-07 23:17:30] [PLAYER] Shield Activated!
-[2025-12-07 23:17:31] [PLAYER] Shield Activated!
-[2025-12-07 23:17:31] [PLAYER] Shield Activated!
-[2025-12-07 23:17:32] [PLAYER] Shield absorbed damage!
-[2025-12-07 23:17:32] [PLAYER] Shield Activated!
-[2025-12-07 23:17:33] [PLAYER] Shield Activated!
-[2025-12-07 23:17:34] [PLAYER] Shield Activated!
-[2025-12-07 23:17:34] [PLAYER] Shield Activated!
-[2025-12-07 23:17:34] [PLAYER] Shield Activated!
-[2025-12-07 23:17:34] [PLAYER] Shield Activated!
-[2025-12-07 23:17:35] [PLAYER] Shield absorbed damage!
-[2025-12-07 23:17:36] [PLAYER] Shield absorbed damage!
-[2025-12-07 23:17:39] [PLAYER] Shield Activated!
-[2025-12-07 23:17:39] [PLAYER] Shield Activated!
-[2025-12-07 23:17:53] [INFO] Application Stopping...
-[2025-12-07 23:17:53] [INFO] Closing logger.
+[2025-12-07 23:21:57] [INFO] Logger initialized.
+[2025-12-07 23:21:57] [INFO] Application Starting...
+[2025-12-07 23:21:57] [INFO] Game Engine Initialized
+[2025-12-07 23:21:57] [STATE] Game: NULL -> MenuState
+[2025-12-07 23:21:58] [INFO] Game Started - Stable Edition
+[2025-12-07 23:21:58] [STATE] Game: MenuState -> PlayingState
+[2025-12-07 23:22:08] [PLAYER] Shield Activated!
+[2025-12-07 23:22:10] [PLAYER] Shield absorbed damage!
+[2025-12-07 23:22:20] [PLAYER] Shield Activated!
+[2025-12-07 23:22:22] [PLAYER] Shield absorbed damage!
+[2025-12-07 23:22:23] [PLAYER] Shield absorbed damage!
+[2025-12-07 23:22:23] [PLAYER] Shield absorbed damage!
+[2025-12-07 23:22:23] [PLAYER] Shield absorbed damage!
+[2025-12-07 23:22:26] [PLAYER] Shield Activated!
+[2025-12-07 23:22:28] [PLAYER] Shield Activated!
+[2025-12-07 23:22:29] [PLAYER] Shield Activated!
+[2025-12-07 23:22:30] [PLAYER] Shield Activated!
+[2025-12-07 23:22:31] [PLAYER] Shield Activated!
+[2025-12-07 23:22:32] [PLAYER] Shield Activated!
+[2025-12-07 23:22:33] [PLAYER] Shield Activated!
+[2025-12-07 23:22:33] [PLAYER] Shield Activated!
+[2025-12-07 23:22:34] [PLAYER] Shield Activated!
+[2025-12-07 23:22:34] [PLAYER] Shield Activated!
+[2025-12-07 23:22:34] [PLAYER] Shield Activated!
+[2025-12-07 23:22:35] [PLAYER] Shield Activated!
+[2025-12-07 23:22:36] [PLAYER] Shield Activated!
+[2025-12-07 23:22:36] [PLAYER] Shield Activated!
+[2025-12-07 23:22:36] [PLAYER] Shield absorbed damage!
+[2025-12-07 23:22:38] [PLAYER] Shield absorbed damage!
+[2025-12-07 23:22:39] [PLAYER] Shield Activated!
+[2025-12-07 23:22:40] [PLAYER] Shield absorbed damage!
+[2025-12-07 23:22:40] [PLAYER] Shield absorbed damage!
+[2025-12-07 23:22:41] [PLAYER] Shield absorbed damage!
+[2025-12-07 23:22:44] [PLAYER] Shield Activated!
+[2025-12-07 23:22:45] [PLAYER] Shield absorbed damage!
+[2025-12-07 23:22:47] [PLAYER] Shield Activated!
+[2025-12-07 23:22:47] [PLAYER] Shield Activated!
+[2025-12-07 23:22:47] [PLAYER] Shield Activated!
+[2025-12-07 23:22:49] [PLAYER] Shield Activated!
+[2025-12-07 23:22:50] [PLAYER] Shield absorbed damage!
+[2025-12-07 23:22:52] [PLAYER] Shield Activated!
+[2025-12-07 23:22:52] [PLAYER] Shield Activated!
+[2025-12-07 23:22:53] [PLAYER] Shield absorbed damage!
+[2025-12-07 23:22:53] [PLAYER] Shield Activated!
+[2025-12-07 23:22:54] [PLAYER] Shield Activated!
+[2025-12-07 23:22:55] [PLAYER] Shield Activated!
+[2025-12-07 23:22:55] [PLAYER] Shield absorbed damage!
+[2025-12-07 23:22:57] [PLAYER] Shield Activated!
+[2025-12-07 23:22:59] [PLAYER] Shield Activated!
+[2025-12-07 23:23:00] [PLAYER] Shield Activated!
+[2025-12-07 23:23:03] [PLAYER] Shield Activated!
+[2025-12-07 23:23:03] [PLAYER] Shield Activated!
+[2025-12-07 23:23:04] [PLAYER] Shield absorbed damage!
+[2025-12-07 23:23:04] [PLAYER] Shield absorbed damage!
+[2025-12-07 23:23:05] [PLAYER] Shield absorbed damage!
+[2025-12-07 23:23:05] [PLAYER] Shield Activated!
+[2025-12-07 23:23:05] [PLAYER] Shield absorbed damage!
+[2025-12-07 23:23:05] [PLAYER] Shield Activated!
+[2025-12-07 23:23:08] [PLAYER] Shield Activated!
+[2025-12-07 23:23:08] [PLAYER] Shield absorbed damage!
+[2025-12-07 23:23:08] [PLAYER] Shield Activated!
+[2025-12-07 23:23:09] [PLAYER] Shield absorbed damage!
+[2025-12-07 23:23:09] [PLAYER] Shield Activated!
+[2025-12-07 23:23:09] [PLAYER] Shield absorbed damage!
+[2025-12-07 23:23:11] [PLAYER] Shield Activated!
+[2025-12-07 23:23:11] [PLAYER] Shield Activated!
+[2025-12-07 23:23:11] [PLAYER] Shield Activated!
+[2025-12-07 23:23:12] [PLAYER] Shield absorbed damage!
+[2025-12-07 23:23:15] [PLAYER] Shield absorbed damage!
+[2025-12-07 23:23:43] [INFO] Application Stopping...
+[2025-12-07 23:23:43] [INFO] Closing logger.
